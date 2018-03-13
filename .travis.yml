@@ -6,11 +6,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ./build-scripts/main.sh
-
-cache:
-  directories:
-    - '$HOME/.sonar/cache'
+  - ./build.sh
 
 notifications:
   email: false
