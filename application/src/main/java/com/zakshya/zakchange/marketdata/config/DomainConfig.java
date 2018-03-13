@@ -3,7 +3,6 @@ package com.zakshya.zakchange.marketdata.config;
 import com.zakshya.zakchange.marketdata.infrastructure.adapters.CryptoCompareMarketData;
 import com.zakshya.zakchange.marketdata.infrastructure.domain.services.MarketDataService;
 import com.zakshya.zakchange.marketdata.infrastructure.remote.feign.CryptoCompare;
-import com.zakshya.zakchange.marketdata.infrastructure.remote.feign.model.CryptoCompareTicker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +21,6 @@ public class DomainConfig {
     @Bean
     @Autowired
     public MarketDataService marketDataService(CryptoCompareMarketData cryptoCompareMarketData) {
-
         return new MarketDataService(cryptoCompareMarketData);
     }
 }

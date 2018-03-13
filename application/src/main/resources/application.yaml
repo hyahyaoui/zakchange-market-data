@@ -4,5 +4,3 @@ server:
 cryptocompare:
   price:
     url: https://min-api.cryptocompare.com/
-
-#logging.level.com.zakshya.zakchange.marketdata.services.remoteservices.CryptoCompare: DEBUG
