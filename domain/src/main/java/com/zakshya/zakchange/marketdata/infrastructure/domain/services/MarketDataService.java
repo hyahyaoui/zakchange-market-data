@@ -1,8 +1,8 @@
 package com.zakshya.zakchange.marketdata.infrastructure.domain.services;
 
 import com.zakshya.zakchange.commons.market.entities.TickerInfo;
-import com.zakshya.zakchange.commons.market.exceptions.InvalidCurrencyPairException;
-import com.zakshya.zakchange.commons.market.exceptions.InvalidExchangeException;
+import com.zakshya.zakchange.commons.market.exceptions.InvalidMarketEntryException;
+import com.zakshya.zakchange.commons.market.exceptions.MarketEntry;
 import com.zakshya.zakchange.commons.validation.ValidationResult;
 import com.zakshya.zakchange.commons.validation.ValidationStatus;
 import com.zakshya.zakchange.marketdata.infrastructure.domain.providers.MarketDataProvider;
@@ -22,7 +22,7 @@ public class MarketDataService {
     public Set<TickerInfo> getLatestPrices(Set<String> from, Set<String> to) {
         ValidationResult validation = marketDataValidator.validateFromToCurrencyPairs(from, to);
         if (ValidationStatus.ERROR.equals(validation.getStatus())) {
-            throw new InvalidCurrencyPairException(validation.getReasonsAsString());
+            throw new InvalidMarketEntryException(validation.getReasonsAsString(), MarketEntry.CURRENCY_PAIR);
         }
         return marketDataProvider.getLatestPrices(from, to);
 
@@ -31,12 +31,12 @@ public class MarketDataService {
     public Set<TickerInfo> getLatestPrices(Set<String> from, Set<String> to, String exchange) {
         ValidationResult validation = marketDataValidator.validateExchange(exchange);
         if (ValidationStatus.ERROR.equals(validation.getStatus())) {
-            throw new InvalidExchangeException(validation.getReasonsAsString());
+            throw new InvalidMarketEntryException(validation.getReasonsAsString(), MarketEntry.EXCHANGE);
         }
 
         validation = marketDataValidator.validateFromToCurrencyPairsForExchange(from, to, exchange);
         if (ValidationStatus.ERROR.equals(validation.getStatus())) {
-            throw new InvalidCurrencyPairException(validation.getReasonsAsString());
+            throw new InvalidMarketEntryException(validation.getReasonsAsString(), MarketEntry.CURRENCY_PAIR);
         }
 
         return marketDataProvider.getLatestPrices(from, to, exchange);

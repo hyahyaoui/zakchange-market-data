@@ -1,9 +1,7 @@
 package com.zakshya.zakchange.marketdata.infrastructure.domain.services;
 
-import com.zakshya.zakchange.commons.market.exceptions.InvalidCurrencyPairException;
-import com.zakshya.zakchange.commons.market.exceptions.InvalidExchangeException;
+import com.zakshya.zakchange.commons.market.exceptions.InvalidMarketEntryException;
 import com.zakshya.zakchange.marketdata.infrastructure.domain.providers.MarketDataProvider;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +43,7 @@ public class MarketDataServiceTest {
         Set<String> to = new HashSet<>();
         to.add("ETH");
 
-        expectedException.expect(InvalidExchangeException.class);
+        expectedException.expect(InvalidMarketEntryException.class);
         expectedException.expectMessage("Exchange unsupportedExchange is not supported.");
 
         marketDataService.getLatestPrices(from, to, "unsupportedExchange");
@@ -59,7 +57,7 @@ public class MarketDataServiceTest {
         Set<String> to = new HashSet<>();
         to.add("ETH");
 
-        expectedException.expect(InvalidCurrencyPairException.class);
+        expectedException.expect(InvalidMarketEntryException.class);
         expectedException.expectMessage(
                 "The following currency/currencies in 'from' is/are not supported:\nInvalid from");
 
@@ -74,7 +72,7 @@ public class MarketDataServiceTest {
         to.add("BTC");
         to.add("Invalid from");
 
-        expectedException.expect(InvalidCurrencyPairException.class);
+        expectedException.expect(InvalidMarketEntryException.class);
         expectedException.expectMessage(
                 "The following currency/currencies in 'to' is/are not supported:\nInvalid from");
 
